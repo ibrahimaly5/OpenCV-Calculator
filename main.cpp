@@ -12,6 +12,8 @@ using namespace cv;
 // Main function that will handle the video
 // Inputs: Cap - Instance of the VideoCapture object holding the webcam
 void handleVideo(VideoCapture& cap);
+
+void processImage(Mat& frame);
  
 int main(){
   // Instantiates the VideoCapture object 
@@ -61,6 +63,7 @@ void handleVideo(VideoCapture& cap) {\
       break;
     // Check for space (Takes a picture)
     } else if(c == 32) {
+      Mat DisplayConfirmation = frame.clone();
       // Get Size of text
       Size textSize = getTextSize(confirmation, fontFace,
                           1, 2, 0);
@@ -68,19 +71,43 @@ void handleVideo(VideoCapture& cap) {\
       Point textOrg((frame.cols - textSize.width)/2,
               textSize.height + 20);
       // Puts text on to screen
-      putText(frame, confirmation, textOrg, 
+      putText(DisplayConfirmation, confirmation, textOrg, 
       fontFace, 1, cvScalar(0,0,0), 2, CV_AA);
       // Displays the text
-      imshow("OpenCV Calculator", frame);
+      imshow("OpenCV Calculator", DisplayConfirmation);
 
       // Displays the current frame until user confirms to 
       // image is good to use
       while(true) {
         c = (char)waitKey(25);
         if(c == 13 || c == 10){
+          processImage(frame);
+          break;
+        } else if(c == 27) {
           break;
         }
       }
     }
   }
+}
+
+void processImage(Mat& frame) {
+  Mat proccesed;
+  Mat gx, gy;
+  // resize(frame, proccesed, Size(20, 40));
+  // Sobel(proccesed, gx, CV_32F, 1, 0, 1);
+  // Sobel(proccesed, gy, CV_32F, 0, 1, 1);
+  // imshow("frameGrayscale", gx);
+  // imshow("frameGrayscale", proccesed);
+
+
+  cvtColor(frame, proccesed, CV_BGR2GRAY);
+  imshow("frameGrayscale", proccesed);
+  GaussianBlur(proccesed, proccesed, cvSize(5, 5), 0);
+  imshow("Blurred", proccesed);
+  Canny(proccesed, proccesed, 50, 200, 5);
+  imshow("Canny", proccesed);
+
+
+
 }
