@@ -24,6 +24,7 @@ private:
 public:
     void LexInput(string s);
     void StringToToken(string s);
+    vector<Token> getTokens();
 };
 
 #endif

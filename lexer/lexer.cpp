@@ -12,9 +12,11 @@ void lexer::LexInput(string s){
         // cout << s[i] << " ";
         StringToToken( string(1,s[i]) );
     }
-    // cout << tokens.size() << endl;
+    for (int i=0; i<tokens.size(); i++){
+        cout << ToString(tokens[i]) << " ";
+    }
+    cout << endl;
 }
-
 
 void lexer::StringToToken(string s){
 
@@ -25,9 +27,9 @@ void lexer::StringToToken(string s){
     }else if ( !s.compare("=") ){
         tokens.push_back( Token::EQUAL_SIGN );
     }else if ( !s.compare("-") ){
-        tokens.push_back( Token::SUBTRACT_SIGN );
+        tokens.push_back( Token::NEGATIVE_SIGN );
     }else if ( !s.compare("+") ){
-        tokens.push_back( Token::ADD_SIGN );
+        tokens.push_back( Token::POSITIVE_SIGN );
     }else if ( !s.compare("*") ){
         tokens.push_back( Token::MULTIPLY_SIGN );
     }else if ( !s.compare("/") ){
@@ -57,18 +59,21 @@ void lexer::StringToToken(string s){
     } else if ( !s.compare("9") ){
         tokens.push_back( Token::NUM_NINE );
     }
-
-    cout << s << " "; 
        
     // else if ( !s.compare("s") ){
     //     string second, third;
     // }
 }
 
+vector<Token> lexer::getTokens(){
+    return tokens;
+}
+
+
 int main(){
     lexer trial1;
 
-    string statement = "(1+2)*3";
+    string statement = "((1+2)*3)";
 
     trial1.LexInput(statement);
 
