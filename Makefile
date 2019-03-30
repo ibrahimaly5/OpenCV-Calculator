@@ -1,11 +1,11 @@
 CC = g++
-LFLAGS =
+LFLAGS = -O3 -std=c++11
 CFLAGS = `pkg-config --cflags --libs opencv`
 OBJS = main.o
 PROGS = OpenCVCalculator
 all: $(OBJS)
-	$(CC) $(OBJS) -o OpenCVCalculator $(CFLAGS)
-	./OpenCVCalculator
+	$(CC) $(OBJS) $(LFLAGS) -o OpenCVCalculator $(CFLAGS)
+# 	./OpenCVCalculator
 calculator.o: main.cpp
 	 $(CC) main.cpp -o main.o $(CFLAGS)
 
