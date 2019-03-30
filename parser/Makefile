@@ -6,6 +6,8 @@ EXE=parser
 
 $(EXE): $(OBJS)
 	$(CC) $(OBJS) -o $(EXE) $(LFLAGS)
+# lexer: lexer.o
+# 	$(CC) lexer.o -o lexer $(LFLAGS)
 parser.o: parser.cpp  parser.h lexer.h token.h
 	$(CC) parser.cpp -o parser.o $(CFLAGS)
 lexer.o: lexer.cpp  lexer.h token.h

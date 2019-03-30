@@ -61,34 +61,34 @@ inline const char* ToString(Token v) {
       break;
     
     case Token::NUM_ZERO: 
-      return "NUM_ZERO";
+      return "0";
       break;
     case Token::NUM_ONE: 
-        return "NUM_ONE";
+        return "1";
         break;
     case Token::NUM_TWO: 
-      return "NUM_TWO";
+      return "2";
       break;
     case Token::NUM_THREE: 
-      return "NUM_THREE";
+      return "3";
       break;
     case Token::NUM_FOUR: 
-      return "NUM_FOUR";
+      return "4";
       break;
     case Token::NUM_FIVE: 
-      return "NUM_FIVE";
+      return "5";
       break;
     case Token::NUM_SIX: 
-      return "NUM_SIX";
+      return "6";
       break;
     case Token::NUM_SEVEN: 
-      return "NUM_SEVEN";
+      return "7";
       break;
     case Token::NUM_EIGHT: 
-      return "NUM_EIGHT";
+      return "8";
       break;
     case Token::NUM_NINE: 
-      return "NUM_NINE";
+      return "9";
       break;
     
     case Token::TRIG_SIN:

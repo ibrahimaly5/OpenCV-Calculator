@@ -9,39 +9,33 @@
 
 using namespace std;
 
-bool is_digit(Token t){
-  string s = ToString(t);
-  s = s.substr(0,3);
-  if (!s.compare("NUM")){
-    // cout << ToString(t) << " is a number" << endl;
-    return true;
-  }
-  return false;
+bool is_int(string t){
+  try {
+      stoi(t);
+      return true;
+    } catch(...) {
+      return false;
+    }
 }
 
-bool is_operator(Token t){
+bool is_operator(string t){
   if (
-    t == Token::MULTIPLY_SIGN ||
-    t == Token::DIVIDE_SIGN ||
-    t == Token::POSITIVE_SIGN ||
-    t == Token::NEGATIVE_SIGN 
+    t == "*" ||
+    t == "/" ||
+    t == "+" ||
+    t == "-" 
     ) {
       return true;
     }
     return false;
 }
 
-// enum paren_state {
-//   in_paren,
-//   not_paren
-// };
-
 void parser::parse_tokens(){
-  Token t;
+  string t;
 
   for (int i=0; i<tokens.size(); i++){
-    cout << ToString(tokens[i]) << endl;
-    if ( is_digit(tokens[i]) ){
+    cout << tokens[i] << endl;
+    if ( is_int(tokens[i]) ){
       postfix.push(tokens[i]);
     } 
     // else if (tokens[i] == Token::DOT_SIGN){
@@ -65,7 +59,7 @@ void parser::parse_tokens(){
         //   operations.push(tokens[i]);
         // } else{
 
-        if ( precedence[ToString(t)] >= precedence[ToString(tokens[i])] ){
+        if ( precedence[t] >= precedence[tokens[i]] ){
           operations.pop();
           postfix.push(t);
           operations.push(tokens[i]);
@@ -87,11 +81,12 @@ void parser::parse_tokens(){
   while (!postfix.empty()){
     t = postfix.top();
     postfix.pop();
-    cout << ToString(t) << " ";
+    cout << t << " ";
   }
+  cout << endl;
 }
 
-stack<Token> parser::get_postfix(){
+stack<string> parser::get_postfix(){
   return postfix;
 }
 
@@ -99,7 +94,7 @@ stack<Token> parser::get_postfix(){
 int main(){
   lexer trial1;
 
-  string statement = "2+3*4";
+  string statement = "22+3*4";
   trial1.LexInput(statement);
 
   parser trial2(trial1.getTokens());

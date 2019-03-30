@@ -20,11 +20,11 @@ Design plan:
 class lexer {
 private:
   /* data */
-  vector<Token> tokens;
+  vector<string> tokens;
 public:
   void LexInput(string s);
   void StringToToken(string s);
-  vector<Token> getTokens();
+  vector<string> getTokens();
 };
 
 #endif
