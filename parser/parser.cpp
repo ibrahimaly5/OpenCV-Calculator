@@ -36,20 +36,24 @@ void parser::parse_tokens(){
   for (int i=0; i<tokens.size(); i++){
     cout << tokens[i] << endl;
     if ( is_int(tokens[i]) ){
-      postfix.push(tokens[i]);
+      postfix.push_back(tokens[i]);
     } 
     // else if (tokens[i] == Token::DOT_SIGN){
     //   // do sth
-    // } else if (tokens[i] == Token::LEFT_PAREN){
-    //   operations.push(tokens[i]);
-    // } else if (tokens[i] == Token::RIGHT_PAREN){
-    //   t = operations.top();
-    //   while (t != Token::LEFT_PAREN){
-    //     operations.pop();
-    //     postfix.push(t);
-    //     t = operations.top();
-    //   }
     // } 
+    else if (tokens[i] == "("){
+      operations.push(tokens[i]);
+    } else if (tokens[i] == ")"){
+      // t = operations.top();
+      while (true){
+        t = operations.top();
+        operations.pop();
+        if (t == "("){
+          break;
+        }
+        postfix.push_back(t);
+      }
+    } 
     else if ( is_operator(tokens[i]) ){
       if (operations.empty()){
         operations.push(tokens[i]);
@@ -61,7 +65,7 @@ void parser::parse_tokens(){
 
         if ( precedence[t] >= precedence[tokens[i]] ){
           operations.pop();
-          postfix.push(t);
+          postfix.push_back(t);
           operations.push(tokens[i]);
         } else{
           operations.push(tokens[i]);
@@ -75,18 +79,16 @@ void parser::parse_tokens(){
   while (!operations.empty()){
     t = operations.top();
     operations.pop();
-    postfix.push(t);
+    postfix.push_back(t);
   }
 
-  while (!postfix.empty()){
-    t = postfix.top();
-    postfix.pop();
-    cout << t << " ";
+  for (int i=0; i<postfix.size(); i++){
+    cout << postfix[i] << " ";
   }
   cout << endl;
 }
 
-stack<string> parser::get_postfix(){
+vector<string> parser::get_postfix(){
   return postfix;
 }
 
@@ -94,7 +96,7 @@ stack<string> parser::get_postfix(){
 int main(){
   lexer trial1;
 
-  string statement = "22+3*4";
+  string statement = "2*(3+4*5)+6";
   trial1.LexInput(statement);
 
   parser trial2(trial1.getTokens());

@@ -26,12 +26,12 @@ class parser {
 private:
   /* data */
   stack<string> operations;
-  stack<string> postfix;
+  vector<string> postfix;
   vector<string> tokens;
 public:
   parser(vector<string> input_tokens);
   void parse_tokens();
-  stack<string> get_postfix();
+  vector<string> get_postfix();
 };
 
 parser::parser(vector<string> input_tokens) {
