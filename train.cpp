@@ -54,8 +54,11 @@ void loadData() {
 void processData() {
 	Mat matClassifications;
 	Mat imageClassifications;
+	char last = NULL;
+	int count = 0;
 	for(int i = 0; i < images.size(); i++) {
 		Mat image = imread(images[i].first);
+		// cout << images[i].first << " ";
 		resize(image, image, Size(i_pref.width, i_pref.height));
 	  cvtColor(image, image, CV_BGR2GRAY);
 	  GaussianBlur(image, image, cvSize(5, 5), 0);
@@ -68,31 +71,38 @@ void processData() {
 	  findContours( image_copy, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 		for( int j = 0; j < contours.size(); j++ ) {
       if(contourArea(contours[j]) >= 100) {
-      	matClassifications.push_back((int)images[i].second[0]);
-	      Mat matFloat;
-	      image.convertTo(matFloat, CV_32FC1);      
-	      Mat matFlat = matFloat.reshape(1, 1);     
+				matClassifications.push_back((int)images[i].second[0]);
+				
+				if(images[i].second[0] != last) {
+					cout << images[i].second[0] << " " << count << endl;
+					last = images[i].second[0];
+					count = 0;
 
-	      imageClassifications.push_back(matFlat); 
+				}
+				else count++;
+				Mat matFloat;
+				image.convertTo(matFloat, CV_32FC1);      
+				Mat matFlat = matFloat.reshape(1, 1);     
+				imageClassifications.push_back(matFlat); 
       }
     }
 	}
 
-  FileStorage fsClassifications("classifications.xml", FileStorage::WRITE);
+  FileStorage Classifications("classifications.xml", FileStorage::WRITE);
 
-  if (fsClassifications.isOpened() == false) {         
+  if (Classifications.isOpened() == false) {         
 
   }
 
-  fsClassifications << "classifications" << matClassifications;
-  fsClassifications.release();
+  Classifications << "classifications" << matClassifications;
+  Classifications.release();
 
-  FileStorage fsTrainingImages("images.xml", FileStorage::WRITE);
+  FileStorage imageClass("images.xml", FileStorage::WRITE);
 
-  if (fsTrainingImages.isOpened() == false) {                
+  if (imageClass.isOpened() == false) {                
       cout << "error, unable to open training images file, exiting program\n\n";
   }
 
-  fsTrainingImages << "images" << imageClassifications;
-  fsTrainingImages.release();
+  imageClass << "images" << imageClassifications;
+  imageClass.release();
 }

@@ -7,11 +7,14 @@
 
 using namespace std;
 using namespace cv;
+using namespace cv::ml;
 
 #define ESC 27
 #define SPACE 32
 #define RETURN 10
 
+
+image_prefs i_pref;
 display_messages Message;
 text font;
 colours Colours;
@@ -98,7 +101,19 @@ void handleVideo(VideoCapture& cap) {\
 }
 
 void processImage(Mat& frame) {
+  Mat MatClassifications;
+  FileStorage Classifications("classifications.xml", FileStorage::READ);
+  Classifications["classifications"] >> MatClassifications;
+  Classifications.release();
+  Mat imageClassifications;
+  FileStorage imageClass("images.xml", FileStorage::READ);
+  imageClass["images"] >> imageClassifications;
+  imageClass.release();
+  Ptr<KNearest>  kNearest(KNearest::create());
+  kNearest->train(imageClassifications, ROW_SAMPLE, MatClassifications);
   Mat processed;
+  Mat original = frame.clone();
+  imshow("Processing", original);
   // Convert to Grayscale
   cvtColor(frame, processed, CV_BGR2GRAY);
   // Debug
@@ -116,13 +131,29 @@ void processImage(Mat& frame) {
 
   vector<vector<Point> > contours;
   vector<Vec4i> hierarchy;
-  findContours( processed, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
+  Mat processedClone = processed.clone();
+  findContours( processedClone, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
   Mat drawing = Mat::zeros( processed.size(), CV_8UC3 );
   // Debug
   for( int i = 0; i< contours.size(); i++ ) {
-      if(contourArea(contours[i]) >= 500) {
-         Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
-         drawContours( drawing, contours, i, color, 2, 8, hierarchy, 0, Point() );
+      if(contourArea(contours[i]) >= 300) {
+          Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
+          drawContours( drawing, contours, i, color, 2, 8, hierarchy, 0, Point() );
+          Rect bound = boundingRect(contours[i]);
+          rectangle(original, bound, Colours.green,2);
+          imshow("Processing", original);
+          Mat crop = processedClone(bound);
+          imshow("Crop", crop);
+          Mat matFloat;
+          Mat resized;
+          resize(crop, resized, Size(i_pref.width, i_pref.height));
+          resized.convertTo(matFloat, CV_32FC1);      
+          Mat matFlat = matFloat.reshape(1, 1);     
+          Mat result(0, 0, CV_32F);
+          kNearest->findNearest(matFlat, 1, result);
+          float fltCurrentChar = (float)result.at<float>(0, 0);
+          cout <<  (char)fltCurrentChar << " ";
+          // kNearest
         }
      }
   imshow( "Contours", drawing );
