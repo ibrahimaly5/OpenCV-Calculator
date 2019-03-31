@@ -28,4 +28,9 @@ struct colours {
 
 };
 
+struct image_prefs {
+	const int width = 20;
+	const int height = 30;
+};
+
 #endif

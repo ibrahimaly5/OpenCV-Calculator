@@ -1,8 +1,9 @@
-#include "opencv2/opencv.hpp"
+#include <vector>
 #include <iostream>
 #include <string>
 #include <opencv2/opencv.hpp>
 #include "consts_and_types.h"
+// #include "preprocessor.h"
 
 using namespace std;
 using namespace cv;
@@ -21,7 +22,6 @@ void handleVideo(VideoCapture& cap);
 
 void processImage(Mat& frame);
 
-// void textDetection(Mat& frame);
  
 int main(){
   // Instantiates the VideoCapture object 
@@ -97,41 +97,37 @@ void handleVideo(VideoCapture& cap) {\
   }
 }
 
-// Processes the image for text detection
 void processImage(Mat& frame) {
-	Mat proccesed;
-	// Convert to Grayscale
-  cvtColor(frame, proccesed, CV_BGR2GRAY);
+  Mat processed;
+  // Convert to Grayscale
+  cvtColor(frame, processed, CV_BGR2GRAY);
   // Debug
-  imshow("frameGrayscale", proccesed);
+  imshow("frameGrayscale", processed);
   // Apply blur
-  GaussianBlur(proccesed, proccesed, cvSize(5, 5), 0);
+  GaussianBlur(processed, processed, cvSize(5, 5), 0);
   // Debug
-  imshow("Blurred", proccesed);
+  imshow("Blurred", processed);
 
-  adaptiveThreshold(proccesed, proccesed, 
-  									255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV,
-  									11, 2);
+  adaptiveThreshold(processed, processed, 
+                    255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV,
+                    11, 2);
   // Debug
-  imshow("Threshold", proccesed);
+  imshow("Threshold", processed);
 
-  vector<vector<Point>> contours;
+  vector<vector<Point> > contours;
   vector<Vec4i> hierarchy;
-  findContours( proccesed, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
-  Mat drawing = Mat::zeros( proccesed.size(), CV_8UC3 );
+  findContours( processed, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
+  Mat drawing = Mat::zeros( processed.size(), CV_8UC3 );
   // Debug
   for( int i = 0; i< contours.size(); i++ ) {
-  		if(contourArea(contours[i]) >= 500) {
-	       Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
-	       drawContours( drawing, contours, i, color, 2, 8, hierarchy, 0, Point() );
-	      }
+      if(contourArea(contours[i]) >= 500) {
+         Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
+         drawContours( drawing, contours, i, color, 2, 8, hierarchy, 0, Point() );
+        }
      }
   imshow( "Contours", drawing );
-  // vector<vector<Point>> ValidContours;
-  // for(int i = 0; i < contours.size(); i++) {
-  // 	if(contours[i] >= 100) {
-  // 		Rect Bound = boundingRect(contours[i]);
+  // Mat blob;
+  // blobFromImage(processed, blob, 1.0, Size(inpWidth, inpHeight), Scalar(123.68, 116.78, 103.94), true, false);
+  // imshow( "Blob", blob );
 
-  // 	}
-  // }
 }
