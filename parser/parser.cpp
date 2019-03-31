@@ -3,13 +3,12 @@
 #include <vector>
 #include <unordered_map>
 #include <iostream>
-#include "token.h"
 #include "parser.h"
 #include "lexer.h"
 
 using namespace std;
 
-bool is_int(string t){
+bool parser::is_int(string t){
   try {
       stoi(t);
       return true;
@@ -18,7 +17,10 @@ bool is_int(string t){
     }
 }
 
-bool is_operator(string t){
+// bool is_imag(string t){
+// }
+
+bool parser::is_operator(string t){
   if (
     t == "*" ||
     t == "/" ||
@@ -30,21 +32,46 @@ bool is_operator(string t){
     return false;
 }
 
+bool parser::is_unary_neg(int index){
+  if (!tokens[index].compare("-")){
+    if (index == 0){
+      return true;
+    }
+    if ( is_operator(tokens[index-1]) || !tokens[index-1].compare("(") ){
+      return true;
+    }
+  }
+  return false;
+}
+
+bool parser::check_imag(int index){
+  if (index == 0){
+    return false;
+  } else if (
+    tokens[index].find("i") && is_int(tokens[index-1]) 
+    ) {
+    return true;
+  }
+  return false;
+}
+
+
 void parser::parse_tokens(){
   string t;
+  for (int i=0; i<tokens.size(); i++){
+    cout << tokens[i] << " "; 
+  }
+  cout << endl;
 
   for (int i=0; i<tokens.size(); i++){
-    cout << tokens[i] << endl;
-    if ( is_int(tokens[i]) ){
+    // if ( this->check_imag(i) ){
+    //   postfix.back() = postfix.back() + tokens[i];
+    // } else
+     if ( this->is_int(tokens[i]) ){
       postfix.push_back(tokens[i]);
-    } 
-    // else if (tokens[i] == Token::DOT_SIGN){
-    //   // do sth
-    // } 
-    else if (tokens[i] == "("){
+    } else if (tokens[i] == "("){
       operations.push(tokens[i]);
     } else if (tokens[i] == ")"){
-      // t = operations.top();
       while (true){
         t = operations.top();
         operations.pop();
@@ -53,15 +80,15 @@ void parser::parse_tokens(){
         }
         postfix.push_back(t);
       }
-    } 
-    else if ( is_operator(tokens[i]) ){
+    } else if (this->is_unary_neg(i)){
+      postfix.push_back(tokens[i]);
+      postfix.back() = postfix.back() + tokens[i+1];
+      i++;
+    } else if ( this->is_operator(tokens[i]) ){
       if (operations.empty()){
         operations.push(tokens[i]);
       } else {
         t = operations.top();
-        // if (t == Token::LEFT_PAREN){
-        //   operations.push(tokens[i]);
-        // } else{
 
         if ( precedence[t] >= precedence[tokens[i]] ){
           operations.pop();
@@ -71,7 +98,6 @@ void parser::parse_tokens(){
           operations.push(tokens[i]);
         }
 
-        // }
       }
     }
   }
@@ -96,7 +122,7 @@ vector<string> parser::get_postfix(){
 int main(){
   lexer trial1;
 
-  string statement = "2*(3+4*5)+6";
+  string statement = "-22-4X-3";
   trial1.LexInput(statement);
 
   parser trial2(trial1.getTokens());

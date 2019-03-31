@@ -6,19 +6,17 @@
 
 using namespace std;
 
-void lexer::LexInput(string s){
+void lexer::LexInput(string input){
   tokens.clear();
+  string s;
 
-  tokens.push_back( string(1,s[0]) );
-  for (int i=1; i<s.size(); i++){
-    // cout << s[i] << " ";
-    StringToToken( string(1,s[i]) );
+  tokens.push_back( string(1,input[0]) );
+  for (int i=1; i<input.size(); i++){
+    StringToToken(string(1,input[i]));
   }
-  // cout << endl;
 }
 
 void lexer::StringToToken(string s){
-
   if ( !s.compare("(") ){
     tokens.push_back( "(" );
   }else if ( !s.compare(")") ){
@@ -29,24 +27,31 @@ void lexer::StringToToken(string s){
     tokens.push_back( "-" );
   }else if ( !s.compare("+") ){
     tokens.push_back( "+" );
-  }else if ( !s.compare("*") ){
+  }else if ( !s.compare("X") ){
     tokens.push_back( "*" );
-  }else if ( !s.compare("/") ){
+  }else if ( !s.compare("÷") ){
     tokens.push_back( "/" );
+  }else if ( !s.compare(".") ){
+    tokens.back() = tokens.back() + s;
+  } else if (!s.compare("i")){
+    try {
+      stoi( tokens.back() );
+      tokens.back() = tokens.back() + s;
+    } catch(...) {
+      tokens.push_back(s);
+    }      
   }
-  
-  //do this later
-
-  // else if ( !s.compare(".") ){
-  //   tokens.push_back( "." );
-  // }
   
   else {
     try {
       stoi(s);
       try {
         stoi(tokens.back());
-        tokens.back() = tokens.back() + s;
+        if (!tokens.back().find("i")){
+          tokens.push_back(s);
+        }else{
+          tokens.back() = tokens.back() + s;
+        }
       } catch(...) {
         tokens.push_back(s);
       }
@@ -57,7 +62,7 @@ void lexer::StringToToken(string s){
     
   // do this later too
 
-  // else if ( !s.compare("s") ){
+  // else if ( !s.compare("sin") ){
   //     string second, third;
   // }
 }
