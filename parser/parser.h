@@ -36,8 +36,6 @@ public:
   bool is_unary_neg(int index);
   bool is_operator(string t);
   bool is_int(string t);
-  bool check_imag(int index);
-
 };
 
 parser::parser(vector<string> input_tokens) {
@@ -50,6 +48,5 @@ void parser::update_tokens(vector<string> input_tokens){
   }
   tokens = input_tokens;
 }
-
 
 #endif

@@ -17,9 +17,6 @@ bool parser::is_int(string t){
     }
 }
 
-// bool is_imag(string t){
-// }
-
 bool parser::is_operator(string t){
   if (
     t == "*" ||
@@ -44,18 +41,6 @@ bool parser::is_unary_neg(int index){
   return false;
 }
 
-bool parser::check_imag(int index){
-  if (index == 0){
-    return false;
-  } else if (
-    tokens[index].find("i") && is_int(tokens[index-1]) 
-    ) {
-    return true;
-  }
-  return false;
-}
-
-
 void parser::parse_tokens(){
   string t;
   for (int i=0; i<tokens.size(); i++){
@@ -64,10 +49,7 @@ void parser::parse_tokens(){
   cout << endl;
 
   for (int i=0; i<tokens.size(); i++){
-    // if ( this->check_imag(i) ){
-    //   postfix.back() = postfix.back() + tokens[i];
-    // } else
-     if ( this->is_int(tokens[i]) ){
+    if ( this->is_int(tokens[i]) ){
       postfix.push_back(tokens[i]);
     } else if (tokens[i] == "("){
       operations.push(tokens[i]);
@@ -122,7 +104,7 @@ vector<string> parser::get_postfix(){
 int main(){
   lexer trial1;
 
-  string statement = "-22-4X-3";
+  string statement = "(2i)X(2i+3)";
   trial1.LexInput(statement);
 
   parser trial2(trial1.getTokens());
