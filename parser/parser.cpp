@@ -98,10 +98,10 @@ void parser::parse_tokens(){
     postfix.push_back(t);
   }
 
-  // for (int i=0; i<postfix.size(); i++){
-  //   cout << postfix[i] << " ";
-  // }
-  // cout << endl;
+  for (int i=0; i<postfix.size(); i++){
+    cout << postfix[i] << " ";
+  }
+  cout << endl;
 }
 
 vector<string> parser::get_postfix(){

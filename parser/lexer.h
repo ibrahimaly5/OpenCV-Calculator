@@ -22,7 +22,7 @@ private:
   vector<string> tokens;
 public:
   void LexInput(string s);
-  void StringToToken(string s);
+  // void StringToToken(string s);
   vector<string> getTokens();
 };
 
