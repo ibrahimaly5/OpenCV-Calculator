@@ -2,7 +2,6 @@
 #include <string>
 #include <iostream>
 #include "lexer.h"
-#include "token.h"
 
 using namespace std;
 
@@ -27,9 +26,9 @@ void lexer::StringToToken(string s){
     tokens.push_back( "-" );
   }else if ( !s.compare("+") ){
     tokens.push_back( "+" );
-  }else if ( !s.compare("X") ){
+  }else if ( !s.compare("X") || !s.compare("*") ){
     tokens.push_back( "*" );
-  }else if ( !s.compare("÷") ){
+  }else if ( !s.compare("÷") || !s.compare("/") ){
     tokens.push_back( "/" );
   }else if ( !s.compare(".") ){
     tokens.back() = tokens.back() + s;

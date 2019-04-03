@@ -4,9 +4,17 @@
 #include <unordered_map>
 #include <iostream>
 #include "parser.h"
-#include "lexer.h"
 
 using namespace std;
+
+unordered_map<string,int> precedence(
+  {
+    {"*",3},
+    {"/",3},
+    {"+",2},
+    {"-",2}
+  }
+);
 
 bool parser::is_int(string t){
   try {
@@ -43,10 +51,10 @@ bool parser::is_unary_neg(int index){
 
 void parser::parse_tokens(){
   string t;
-  for (int i=0; i<tokens.size(); i++){
-    cout << tokens[i] << " "; 
-  }
-  cout << endl;
+  // for (int i=0; i<tokens.size(); i++){
+  //   cout << tokens[i] << " "; 
+  // }
+  // cout << endl;
 
   for (int i=0; i<tokens.size(); i++){
     if ( this->is_int(tokens[i]) ){
@@ -90,25 +98,20 @@ void parser::parse_tokens(){
     postfix.push_back(t);
   }
 
-  for (int i=0; i<postfix.size(); i++){
-    cout << postfix[i] << " ";
-  }
-  cout << endl;
+  // for (int i=0; i<postfix.size(); i++){
+  //   cout << postfix[i] << " ";
+  // }
+  // cout << endl;
 }
 
 vector<string> parser::get_postfix(){
   return postfix;
 }
 
-
-int main(){
-  lexer trial1;
-
-  string statement = "(2i)X(2i+3)";
-  trial1.LexInput(statement);
-
-  parser trial2(trial1.getTokens());
-  trial2.parse_tokens();
-
-  return 0;
+void parser::get_tokens(vector<string> input_tokens) {
+  postfix.clear();
+  while (!operations.empty()){
+    operations.pop();
+  }
+  tokens = input_tokens;
 }
