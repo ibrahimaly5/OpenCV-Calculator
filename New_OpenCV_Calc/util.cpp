@@ -40,8 +40,10 @@ static bool sortRects(const Rect& rect1, const Rect& rect2) {
 
 vector<Rect> getValidRects(vector<vector<Point> >& contours) {
 	vector<Rect> validRects;
+	vector<vector<Point> > poly(contours.size());
 	for(int i = 0; i < contours.size(); i++) {
-		Rect bound = boundingRect(contours[i]);
+		approxPolyDP(Mat(contours[i]), poly[i], 3, true);
+		Rect bound = boundingRect(poly[i]);
 		validRects.push_back(bound);
 	}
 	sort(validRects.begin(), validRects.end(), sortRects);
