@@ -40,6 +40,7 @@ public:
   void perform_operation(string operation);
   void print_output();
   void evaluate_imaginary(string s1, string s2, string operation);
+  void put_imaginary(string s, complex<double> &number);
   bool is_operator(string t);
   bool is_imag(string t);
 };
@@ -52,7 +53,6 @@ void evaluator::start_evaluator(vector<string> input_expr) {
     expression.pop();
   }
 }
-
 
 bool evaluator::is_operator(string t){
   if (
@@ -85,22 +85,41 @@ void evaluator::perform_operation(string operation){
   }
 }
 
+void evaluator::put_imaginary(string s, complex<double> &number){
+  string num_string;
+  for (int i=0; i<s.size(); i++){
+    if ( s[i] == '+' || s[i] == '-'){
+      number.real( stod( num_string ) );
+      cout << "what is this doing" << num_string << endl;
+      num_string = s[i];
+    } else if (s[i] == 'i'){
+      number.imag( stod( num_string ) );
+      cout << "oh its this " << num_string << endl;
+    } else {
+      num_string += s[i];
+    }
+  }
+}
+
 void evaluator::evaluate_imaginary(string s1, string s2, string operation){
   complex1 = (0,0);
   complex2 = (0,0);
-  cout << "here " << s1 << " " << s2 << endl;
+  // cout << "here " << s1 << " " << s2 << endl;
+  string sign;
   if (is_imag(s1)){
-    complex1.imag( stod( s1.substr(0,s1.size()-1) ) );
+    put_imaginary(s1, complex1);
+    // complex1.imag( stod( s1.substr(0,s1.size()-1) ) );
   } else{
     complex1.real ( stod(s1) );
   }
 
   if (is_imag(s2)){
-    complex2.imag( stod( s2.substr(0,s2.size()-1) ) );
+    put_imaginary(s2, complex2);    
+    // complex2.imag( stod( s2.substr(0,s2.size()-1) ) );
   } else{
     complex2.real ( stod(s2) );
   }
-  cout << "here " << complex1 << " " << complex2 << endl;
+  // cout << "here " << complex1 << " " << complex2 << endl;
 
   if (!operation.compare("*")){
     complex1 *= complex2;
@@ -115,6 +134,14 @@ void evaluator::evaluate_imaginary(string s1, string s2, string operation){
     expression.push( to_string(complex1.imag()) + "i" );
   } else if (complex1.imag() == 0){
     expression.push( to_string(complex1.real()) );
+  } else{
+    if (complex1.imag()>0){
+      sign = "+";
+      expression.push( to_string(complex1.real()) + sign + to_string(complex1.imag()) + "i" );
+    } else {
+      expression.push( to_string(complex1.real()) + to_string(complex1.imag()) + "i" );
+    }
+    // cout << expression.top() << endl;
   }
   
 }
