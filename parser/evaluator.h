@@ -90,11 +90,11 @@ void evaluator::put_imaginary(string s, complex<double> &number){
   for (int i=0; i<s.size(); i++){
     if ( s[i] == '+' || s[i] == '-'){
       number.real( stod( num_string ) );
-      cout << "what is this doing" << num_string << endl;
+      // cout << "what is this doing " << num_string << endl;
       num_string = s[i];
     } else if (s[i] == 'i'){
       number.imag( stod( num_string ) );
-      cout << "oh its this " << num_string << endl;
+      // cout << "oh its this " << num_string << endl;
     } else {
       num_string += s[i];
     }
@@ -114,7 +114,8 @@ void evaluator::evaluate_imaginary(string s1, string s2, string operation){
   }
 
   if (is_imag(s2)){
-    put_imaginary(s2, complex2);    
+    put_imaginary(s2, complex2);
+    // cout << complex2 << endl;  
     // complex2.imag( stod( s2.substr(0,s2.size()-1) ) );
   } else{
     complex2.real ( stod(s2) );
@@ -141,7 +142,7 @@ void evaluator::evaluate_imaginary(string s1, string s2, string operation){
     } else {
       expression.push( to_string(complex1.real()) + to_string(complex1.imag()) + "i" );
     }
-    // cout << expression.top() << endl;
+    // cout << "after all: " << expression.top() << endl;
   }
   
 }
