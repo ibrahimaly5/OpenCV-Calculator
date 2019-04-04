@@ -1,3 +1,4 @@
+
 #include <opencv2/opencv.hpp>
 #include <string>
 #include <algorithm>
@@ -26,7 +27,7 @@ vector<vector<Point> > getValidContours(vector<vector<Point> >& contours,
 	findContours( preprocessedImg, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 	vector<vector<Point> > valid;
 	for(int i = 0; i < contours.size(); i++) {
-		if(contourArea(contours[i]) > 100) {
+		if(contourArea(contours[i]) > 300) {
 			valid.push_back(contours[i]);
 		}
 	}
@@ -40,10 +41,8 @@ static bool sortRects(const Rect& rect1, const Rect& rect2) {
 
 vector<Rect> getValidRects(vector<vector<Point> >& contours) {
 	vector<Rect> validRects;
-	vector<vector<Point> > poly(contours.size());
 	for(int i = 0; i < contours.size(); i++) {
-		approxPolyDP(Mat(contours[i]), poly[i], 3, true);
-		Rect bound = boundingRect(poly[i]);
+		Rect bound = boundingRect(contours[i]);
 		validRects.push_back(bound);
 	}
 	sort(validRects.begin(), validRects.end(), sortRects);

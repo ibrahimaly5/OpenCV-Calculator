@@ -24,7 +24,7 @@ text font;
 colours Colours;
 int main(){
   // Instantiates the VideoCapture object 
-  VideoCapture cap(0); 
+  VideoCapture cap(1); 
     
   // Check if the webcam was opened succesfully
   if(!cap.isOpened()){
@@ -115,7 +115,7 @@ void processImage(Mat& frame) {
 
 	Ptr<SVM> svm = StatModel::load<SVM>("model4.yml");
 
-
+  string equation;
 	for(int i = 0; i < validRects.size(); i++) {
 		rectangle(original, validRects[i], Colours.green, 2);
     imshow("Processing", original);
@@ -128,7 +128,11 @@ void processImage(Mat& frame) {
 		resized.convertTo(matFloat, CV_32FC1);      
 		Mat matFlat = matFloat.reshape(1, 1);
 		char predicted = svm->predict(matFlat);
-		cout << predicted << " ";
+    if(predicted == '-' && validRects[i].width <= 3 * validRects[i].height) {
+      predicted = 'X';
+    }
+    equation += predicted;
+		cout << predicted;
 	}
 	cout << endl;
 }
