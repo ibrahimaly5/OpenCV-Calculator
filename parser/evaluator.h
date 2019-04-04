@@ -43,6 +43,8 @@ public:
   void put_imaginary(string s, complex<double> &number);
   bool is_operator(string t);
   bool is_imag(string t);
+  string send_result();
+
 };
 
 void evaluator::start_evaluator(vector<string> input_expr) {
@@ -179,6 +181,10 @@ void evaluator::EvaluateExpr(){
 void evaluator::print_output(){
   cout << expression.top() << endl;
   expression.pop();
+}
+
+string evaluator::send_result() {
+  return expression.top();
 }
 
 #endif
