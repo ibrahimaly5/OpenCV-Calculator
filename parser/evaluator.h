@@ -166,8 +166,9 @@ void evaluator::EvaluateExpr(){
         evaluate_imaginary(element1, element2, operation);
       } else{
 
-        num1 = stod(element1);
-        num2 = stod(element2);
+        num1 = stod(element2);
+        num2 = stod(element1);
+        cout << num1 << " " << num2 << endl;
         
         perform_operation(operation);
       }
