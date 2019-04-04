@@ -21,14 +21,9 @@ int main() {
 	vector<int> labels;
 	Mat imageClassifications;
 	loadData();
-	if(images.size() == 0){
-		cout << "No images were found" << endl;
-		return 0;
-	} 
+	cout << "Loaded dataset" <<endl;
 	processData(labels, imageClassifications);
 	setupSVM(labels, imageClassifications);
-	cout << "Finished Training" << endl;
-	return 0;
 }
 
 
@@ -94,11 +89,12 @@ void processData(vector<int>& labels, Mat& imageClassifications) {
 
 void setupSVM(vector<int>& labels, Mat& imageClassifications) {
 	Ptr<SVM> svm = SVM::create();
-  svm->setGamma(0.50625);
-  svm->setC(12.5);
-  svm->setKernel(SVM::RBF);
-  svm->setType(SVM::C_SVC);
+	svm->setType(SVM::C_SVC);
+	svm->setKernel(SVM::LINEAR);
+	svm->setTermCriteria(TermCriteria(TermCriteria::MAX_ITER, 100, 1e-6));
+	svm->setGamma(3);
+	svm->setDegree(3);
 	Ptr<TrainData> td = TrainData::create(imageClassifications, ROW_SAMPLE, labels);
-	svm->train(td);
+	svm->trainAuto(td);
 	svm->save("model4.yml");
 }
