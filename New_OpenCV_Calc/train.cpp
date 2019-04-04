@@ -21,6 +21,7 @@ int main() {
 	vector<int> labels;
 	Mat imageClassifications;
 	loadData();
+	cout << "Loaded dataset" <<endl;
 	processData(labels, imageClassifications);
 	setupSVM(labels, imageClassifications);
 }
@@ -69,7 +70,7 @@ void processData(vector<int>& labels, Mat& imageClassifications) {
 		Mat preprocessedImg = preprocessImage(image);
 		validContours = getValidContours(contours, hierarchy, preprocessedImg);
 		validRects = getValidRects(validContours);
-		if(validContours.size() != 1) break;
+		if(validContours.size() != 1) continue;
 
 		Mat character = preprocessedImg(validRects[0]);
 		Mat resized;
@@ -94,6 +95,6 @@ void setupSVM(vector<int>& labels, Mat& imageClassifications) {
 	svm->setGamma(3);
 	svm->setDegree(3);
 	Ptr<TrainData> td = TrainData::create(imageClassifications, ROW_SAMPLE, labels);
-	svm->train(td);
+	svm->trainAuto(td);
 	svm->save("model4.yml");
 }

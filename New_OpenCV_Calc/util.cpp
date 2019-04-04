@@ -1,3 +1,4 @@
+
 #include <opencv2/opencv.hpp>
 #include <string>
 #include <algorithm>
@@ -26,7 +27,7 @@ vector<vector<Point> > getValidContours(vector<vector<Point> >& contours,
 	findContours( preprocessedImg, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 	vector<vector<Point> > valid;
 	for(int i = 0; i < contours.size(); i++) {
-		if(contourArea(contours[i]) > 100) {
+		if(contourArea(contours[i]) > 300) {
 			valid.push_back(contours[i]);
 		}
 	}

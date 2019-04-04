@@ -24,7 +24,7 @@ text font;
 colours Colours;
 int main(){
   // Instantiates the VideoCapture object 
-  VideoCapture cap(0); 
+  VideoCapture cap(1); 
     
   // Check if the webcam was opened succesfully
   if(!cap.isOpened()){
@@ -128,6 +128,9 @@ void processImage(Mat& frame) {
 		resized.convertTo(matFloat, CV_32FC1);      
 		Mat matFlat = matFloat.reshape(1, 1);
 		char predicted = svm->predict(matFlat);
+    if(predicted == '-' && validRects[i].width <= 3 * validRects[i].height) {
+      predicted = 'X';
+    }
 		cout << predicted << " ";
 	}
 	cout << endl;
