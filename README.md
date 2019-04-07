@@ -167,22 +167,26 @@ Additional Explanations of Files:
 
 Sources:
 
-https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_ml/py_knn/py_knn_opencv/py_knn_opencv.html
+	https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_ml/py_knn/py_knn_opencv/py_knn_opencv.html
 
-https://towardsdatascience.com/scanned-digits-recognition-using-k-nearest-neighbor-k-nn-d1a1528f0dea
+	https://towardsdatascience.com/scanned-digits-recognition-using-k-nearest-neighbor-k-nn-d1a1528f0dea
 
-https://www.learnopencv.com/handwritten-digits-classification-an-opencv-c-python-tutorial/
+	https://www.learnopencv.com/handwritten-digits-classification-an-opencv-c-python-tutorial/
 
-https://docs.opencv.org/trunk/dd/d3b/tutorial_py_svm_opencv.html
+	https://docs.opencv.org/trunk/dd/d3b/tutorial_py_svm_opencv.html
 
-https://github.com/VitaliiKinakh/ComputerVisionCalculator
+	https://github.com/VitaliiKinakh/ComputerVisionCalculator
 
-https://github.com/Breta01/handwriting-ocr
+	https://github.com/Breta01/handwriting-ocr
 
-https://becominghuman.ai/towards-forms-text-recognition-using-deep-learning-f8b39840b984
+	https://becominghuman.ai/towards-forms-text-recognition-using-deep-learning-f8b39840b984
 
-https://stackoverflow.com/questions/34415815/detect-text-in-images-with-opencv
+	https://stackoverflow.com/questions/34415815/detect-text-in-images-with-opencv
 
-https://github.com/spmallick/learnopencv
+	https://github.com/spmallick/learnopencv
 
-https://github.com/githubharald/SimpleHTR
+	https://github.com/githubharald/SimpleHTR
+
+	https://www.learnopencv.com/install-opencv3-on-ubuntu/
+	
+	https://docs.opencv.org/3.0-beta/modules/videoio/doc/reading_and_writing_video.html
