@@ -26,7 +26,8 @@ Running Instructions:
 	so navigate to the folder where this README is located
 	and open it in terminal. Type "make" and the program
 	will compile two executables, OpenCVCalculator and 
-	train. Each program will be explained below
+	train. Also extract dataset into this folder as well.
+	Each program will be explained below
 
 	Train:
 	This program will train the SVM for detection. It will
