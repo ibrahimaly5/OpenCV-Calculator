@@ -23,6 +23,16 @@ Included Files:
 	util.h
 	dataset.tar.gz
 	ExampleHandwriting
+	
+Pre-requisites:
+
+	OpenCV 3.4
+	Follow the following tutorial to install;
+	https://www.learnopencv.com/install-opencv3-on-ubuntu/
+	However, in steps 4.1 and 4.2, instead of the command
+	git checkout 3.3.1, use the command git checkout 3.4
+	instead for both steps
+	
 
 Running Instructions:
 
