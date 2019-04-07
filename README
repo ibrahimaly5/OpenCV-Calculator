@@ -1,0 +1,171 @@
+Header
+
+
+
+
+Included Files:
+	consts.h
+	evaluator.cpp
+	evaluator.h
+	lexer.cpp
+	lexer.h
+	main.cpp
+	Makefile
+	model4.yml
+	parser.cpp
+	parser.h
+	README
+	tindydir.h
+	token.h
+	train.cpp
+	util.cpp
+	util.h
+
+Running Instructions:
+	To run this program we first have to compile it. To do
+	so navigate to the folder where this README is located
+	and open it in terminal. Type "make" and the program
+	will compile two executables, OpenCVCalculator and 
+	train. Each program will be explained below
+
+	Train:
+	This program will train the SVM for detection. It will
+	look for the dataset folder and will train from all
+	the images placed inside. If desired, the user may add
+	images into their corresponding folder for better 
+	detection. It is also possible to add a new folder for
+	detection of a different symbol. For example, pi. 
+	Simply add a folder that contains multiple images of
+	the handwritten symbol pi. Note the program expects 
+	the image to be on a plain background with only the 
+	symbol on the background. If not, the program will 
+	reject this image and not use it as a training sample.
+	The label associated to the images will be the name 
+	of the folder containing them. If the user does add
+	images, the SVM will have to be retrained. To do so
+	simply type in terminal while in this folder "./train".
+	This will run the training file and overwrite the 
+	pre-existing model4.yml. Note the model4.yml file 
+	included is already pre-trained from the images 
+	included.
+
+	OpenCVCalculator:
+	This program is the main program for this package. To
+	use this program, open the containing folder in 
+	terminal and type "./OpenCVCalculator". This will then
+	open a window with a video stream. Note a webcam must
+	be connected or else the program will not open and
+	display an error message. The program is coded to be
+	used on a laptop that has a built in camera, but the
+	desired video stream is from an external USB Camera.
+	This can be changed for use in different systems. To
+	do so open main.cpp and change the value inside cap
+	on line 39. The following are what to change the
+	value to depending on the setup;
+	Setup     				Value to change to:
+	-------------------------------------------
+	No built in webcam,   |
+	external USB cam is   | 0
+	to be used			  |
+	-------------------------------------------
+	Built in webcam is to | 0
+	be used				  |
+	-------------------------------------------
+	Has built in webcam,  |
+	external USB cam is   | 1
+	to be used			  |
+	-------------------------------------------
+	Once the program has succesfully opened up, the 
+	video stream should be displayed in the window.
+	Write an equation on a plain piece of paper. The
+	supported symbols are +,-,/,X,(,),i,,1,2,3,4,5,6,
+	7,8, and 9. Please note that the program expects
+	these symbols to be written a certain way as the
+	program was trained to detect the creator's 
+	handwriting. Please refer to the train description
+	on adding support to detect other handwriting. The
+	expected way to write the symbols are contained in
+	the ExampleHandwriting directory. Once the user
+	has written the equation on the piece of paper
+	the way the program expects it, simply capture a
+	picture using the camera, ensuring the only
+	the piece of paper with the equation is in frame.
+	To take a picture, simply press space. The program
+	will then prompt the user to confirm that the image
+	is okay to be used; that is, the image is not blurry
+	and there is nothing but the paper with the equation
+	in the frame. Press Enter to confirm the image is 
+	good to use or ESC to reject the image. If the
+	user presses ESC, the program will return to
+	displaying the live video stream. If the user 
+	presses enter, the program will then start to process
+	the image. Note that there is a DEBUG feature that
+	can be enabled in main.cpp to see what the program
+	is doing to the image. To enable it, change the value
+	to 1 on line 18 in the main.cpp file. Once the image
+	has succesfully processed the image, the program will
+	then ask the user to to confirm if the program 
+	detected the equation correctly. If the equation is
+	correct, press enter and the program will then display
+	the result on the image below the equation. Press ESC
+	to reject the image, and the program will then return
+	to the video stream.
+
+
+
+Notes:
+	THE PROGRAM EXPECTS HANDWRITING IN THE STYLE OF THE 
+	CREATOR ONLY. See ExampleHandwriting to see examples
+
+	Functionality for making the SVM output a second guess
+	when two operators were predicted in a row could not
+	be implemented as there was no clear way to do so, to
+	the creators knowledge, in the OpenCV documentation.
+
+Additional Explanations of Files:
+	util.cpp/util.h:
+	These files contain functions for processing the 
+	images. i.e. Finding contours/bounding rects and
+	preprocessing a given image.
+
+	train.cpp:
+	Trains an SVM for detection of numbers/symbols
+	from the datset folder.
+
+	main.cpp:
+	Driver program for all files. Contains the 
+	functionality of opening the video stream and
+	handles all user input
+
+	consts.h:
+	Contains variables for use mainly in main.cpp
+	Simply put, a way to make code cleaner and more
+	modular.
+
+	model4.yml
+	A pre-trained yml file for the SVM. Trained from
+	included images in the dataset directory
+
+
+
+Sources:
+
+https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_ml/py_knn/py_knn_opencv/py_knn_opencv.html
+
+https://towardsdatascience.com/scanned-digits-recognition-using-k-nearest-neighbor-k-nn-d1a1528f0dea
+
+https://www.learnopencv.com/handwritten-digits-classification-an-opencv-c-python-tutorial/
+
+https://docs.opencv.org/trunk/dd/d3b/tutorial_py_svm_opencv.html
+
+https://github.com/VitaliiKinakh/ComputerVisionCalculator
+
+https://github.com/Breta01/handwriting-ocr
+
+https://becominghuman.ai/towards-forms-text-recognition-using-deep-learning-f8b39840b984
+
+https://stackoverflow.com/questions/34415815/detect-text-in-images-with-opencv
+
+https://github.com/spmallick/learnopencv
+
+https://github.com/githubharald/SimpleHTR
