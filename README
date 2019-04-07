@@ -20,14 +20,16 @@ Included Files:
 	train.cpp
 	util.cpp
 	util.h
+	dataset.tar.gz
+	ExampleHandwriting
 
 Running Instructions:
 	To run this program we first have to compile it. To do
 	so navigate to the folder where this README is located
 	and open it in terminal. Type "make" and the program
 	will compile two executables, OpenCVCalculator and 
-	train. Also extract dataset into this folder as well.
-	Each program will be explained below
+	train. Also extract dataset.tar.gz into this folder 
+	as well. Each program will be explained below
 
 	Train:
 	This program will train the SVM for detection. It will
@@ -63,18 +65,18 @@ Running Instructions:
 	do so open main.cpp and change the value inside cap
 	on line 39. The following are what to change the
 	value to depending on the setup;
-	Setup     				Value to change to:
+	Setup     		Value to change to:
 	-------------------------------------------
 	No built in webcam,   |
 	external USB cam is   | 0
-	to be used			  |
+	to be used	      |
 	-------------------------------------------
 	Built in webcam is to | 0
-	be used				  |
+	be used		      |
 	-------------------------------------------
 	Has built in webcam,  |
 	external USB cam is   | 1
-	to be used			  |
+	to be used	      |
 	-------------------------------------------
 	Once the program has succesfully opened up, the 
 	video stream should be displayed in the window.
