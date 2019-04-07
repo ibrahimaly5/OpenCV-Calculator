@@ -4,6 +4,7 @@ Header
 ![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/43446567/55688118-6177f880-5932-11e9-8213-31059d8cdaa5.gif)
 
 Included Files:
+
 	consts.h
 	evaluator.cpp
 	evaluator.h
@@ -24,6 +25,7 @@ Included Files:
 	ExampleHandwriting
 
 Running Instructions:
+
 	To run this program we first have to compile it. To do
 	so navigate to the folder where this README is located
 	and open it in terminal. Type "make" and the program
@@ -63,7 +65,7 @@ Running Instructions:
 	desired video stream is from an external USB Camera.
 	This can be changed for use in different systems. To
 	do so open main.cpp and change the value inside cap
-	on line 39. The following are what to change the
+	on line 54. The following are what to change the
 	value to depending on the setup;
 	Setup     		Value to change to:
 	-------------------------------------------
@@ -117,6 +119,7 @@ Running Instructions:
 
 
 Notes:
+
 	THE PROGRAM EXPECTS HANDWRITING IN THE STYLE OF THE 
 	CREATOR ONLY. See ExampleHandwriting to see examples
 
@@ -126,6 +129,7 @@ Notes:
 	the creators knowledge, in the OpenCV documentation.
 
 Additional Explanations of Files:
+
 	util.cpp/util.h:
 	These files contain functions for processing the 
 	images. i.e. Finding contours/bounding rects and

@@ -11,19 +11,39 @@ using namespace cv;
 using namespace cv::ml;
 using namespace std;
 
+
+// Uses tinydir to find the path of all image files for training
+// The path and the associated label are then placed into a pair
+// which are then place into a vector 
 void loadData();
+
+// Processes each image using function in util.cpp
 void processData(vector<int>& labels, Mat& imageClassifications);
+
+// Simply creates the SVM with the training data
 void setupSVM(vector<int>& labels, Mat& imageClassifications);
 
+// Global variable for image preferences
+// Originates in consts.h
 image_prefs i_pref;
+// The vector containing each image path and its label
 vector <pair<string, string> > images;   
+
+
 int main() {
+	// Holds all labels of the images
 	vector<int> labels;
 	Mat imageClassifications;
+	// Calls loadDate
 	loadData();
+	// Displays the end of loading data
 	cout << "Loaded dataset" <<endl;
+	// Process all images
 	processData(labels, imageClassifications);
+	// Sets up the SVM
 	setupSVM(labels, imageClassifications);
+	// Return 0 by convention
+	return 0;
 }
 
 // Finds path of each number in the dataset and pairs it with its label
