@@ -164,6 +164,11 @@ Additional Explanations of Files:
 
 
 Sources:
+	
+	http://www.oxfordmathcenter.com/drupal7/node/628
+	
+	#for unary negatives
+	https://forums.cncnet.org/topic/5367-maths-recursive-descent-or-shunting-yard/
 
 	https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_ml/py_knn/py_knn_opencv/py_knn_opencv.html
 
