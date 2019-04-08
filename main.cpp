@@ -225,16 +225,25 @@ void processImage(Mat& frame) {
 }
 
 string equate(string equation) {
+  //initiate a class of lexer, parser and evaluator
   lexer Lexer;
   parser Parser;
   evaluator Evaluator;
-
+  
+  //Lex the input, and send it to the parser class
   Lexer.LexInput(equation);
   Parser.get_tokens(Lexer.getTokens());
+
+  //parse the tokens to a postfix expression
   Parser.parse_tokens();
 
+  //Send the postfix expression to the evaluator class
   Evaluator.start_evaluator(Parser.get_postfix());
+
+  //Evaluate the expression
   Evaluator.EvaluateExpr();
+
+  //Return the result of evaluating the expression and print it out
   string result = Evaluator.send_result();
   Evaluator.print_output();
   return result;

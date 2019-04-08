@@ -6,7 +6,6 @@ Header
 Included Files:
 
 	consts.h
-	evaluator.cpp
 	evaluator.h
 	lexer.cpp
 	lexer.h
@@ -17,7 +16,6 @@ Included Files:
 	parser.h
 	README
 	tindydir.h
-	token.h
 	train.cpp
 	util.cpp
 	util.h

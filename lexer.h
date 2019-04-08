@@ -8,21 +8,23 @@ using namespace std;
 
 /*
 Design plan:
-  -Build a state machine called "token" with all the different token value (ex: left_paren, right_paren, etc)
-  -Create a class called lexer that is a vector of tokens
+  -Create a class called lexer that is a vector of token strings
   -This class will have these functions:
     -vector<token> LexInput(string s) function which will receive a string s,
-    and lex the input based on each character in the string, and return a vector with all the tokens
-    -StringToLex function which will read 1 string character, and return its token type
+    and lex the input based on each character in the string, and creates a vector with all the tokens
+    -getTokens() function will return the vector of the tokens
 */
 
 class lexer {
 private:
-  /* data */
+  /* a vector of strings for each token */
   vector<string> tokens;
+  
 public:
+  //Lexes the input, and saves the lexed result in the vector tokens
   void LexInput(string s);
-  // void StringToToken(string s);
+
+  //returns the vector tokens
   vector<string> getTokens();
 };
 
