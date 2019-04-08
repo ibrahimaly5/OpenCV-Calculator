@@ -81,14 +81,14 @@ Running Instructions:
 	-------------------------------------------
 	No built in webcam,   |
 	external USB cam is   | 0
-	to be used	          |
+	to be used	      |
 	-------------------------------------------
 	Built in webcam is to | 0
-	be used		            |
+	be used		      |
 	-------------------------------------------
 	Has built in webcam,  |
 	external USB cam is   | 1
-	to be used	          |
+	to be used	      |
 	-------------------------------------------
 
 	Once the program has succesfully opened up, the 
